@@ -15,8 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var loadingActivity: UIActivityIndicatorView!
     @IBOutlet weak var statusLabel: UILabel!
-    let expectedUserName = "CodePro"
-    let expectedPassword = "abc123"
+    let expectedUserName = "sagar"
+    let expectedPassword = "1234"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +52,20 @@ class LoginViewController: UIViewController {
         UserDefaults.standard.set(true, forKey: "loggedIn")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            
+            UserDefaults.standard.set(true, forKey: "loggedIn")
             self.statusLabel.text = "Logged In"
             self.loadingActivity.stopAnimating()
             self.dismiss(animated: true, completion: nil)
+            
+            NotificationCenter.default.post(name: Notification.Name("loggedIn"), object: nil)
         }
     }
     
     private func presentAlert(with title: String, message: String) {
+        
+        loadingActivity.stopAnimating()
+        
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
  
         alertVC.addAction(.init(title: "Ok", style: .default, handler: nil))
